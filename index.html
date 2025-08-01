@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="content">
+        <h1>Tracker</h1>
+        <select id="workoutDay">
+            <option value="0">Push</option>
+            <option value="1">Pull</option>
+            <option value="2">Legs</option>
+            <option value="3">tester</option>
+        </select>
+        <div class="workoutDiv">
+            <h2>Current Workout: </h2>
+            <h3 class="curWorkout"></h3>
+            <p class="curWorkoutDesc"></p>
+            <p class="curWorkoutReps"></p>
+        </div>
+        <p>Rest Time Left :</p>
+        <p class="restTime">0</p>
+        <button class="cut">Start Workout</button>
+        <button class="reset">↺</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

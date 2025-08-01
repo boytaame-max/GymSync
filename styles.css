@@ -1,0 +1,76 @@
+html {
+    height: 100%;
+}
+
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    background-image: linear-gradient(#00012e, #000000, #00012e);
+    background-repeat: no-repeat;
+    color: white;
+}
+
+.content {
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+}
+
+.content > p {
+    font-size: 28px;
+}
+
+.curWorkoutDesc {
+    font-size: 17px;
+}
+
+.workoutDiv {
+    margin: auto;
+    max-width: fit-content;
+    padding: 35px;
+    border-radius: 2rem;
+    background-color: #000000a6;
+}
+
+.cut {
+    padding: 25px 25px;
+    border-radius: 12px;
+    border: none;
+    background-color: #a94beb;
+    color: white;
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+.curWorkout {
+    font-style: italic;
+}
+
+#workoutDay {
+    border: none;
+    height: 40px;
+    width: 70px;
+    font-weight: bold;
+    margin-bottom: 35px;
+}
+
+.curWorkoutReps {
+    font-style: italic;
+}
+
+.reset {
+    position: fixed;
+    left: 0%;
+    bottom: 0%;
+    padding: 20px 25px;
+    margin: 15px;
+    border-radius: 50%;
+    background-color: #a94beb;
+    color: white;
+    border: white solid 2px;
+}
