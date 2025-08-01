@@ -64,11 +64,12 @@ body {
 }
 
 .reset {
+    display: inline-block;
     font-size: 35px;
     position: fixed;
     left: 0%;
     bottom: 0%;
-    padding: 20px 30px;
+    padding: 1.2rem 0.9em;
     margin: 15px;
     border-radius: 50%;
     background-color: #a94beb;
