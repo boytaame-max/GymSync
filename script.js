@@ -54,17 +54,17 @@ let currentState = STATES.IDLE;
 // DATA
 
 const pushDay = [
-    {name: 'Bench Press', desc: 'Full range, pec focus, 1-2 RIR', amount: 3, reps: `6-10`, rest: 5},
-    {name: 'Shoulder Press', desc: 'Controlled, upright back, no bounce', amount: 3, reps: `8-12`, rest: 5},
-    {name: 'Chest Fly', desc: 'Hard stretch + strong squeeze, 0-1 RIR', amount: 3, reps: `12-15`, rest: 5},
-    {name: 'Lateral Raise', desc: 'Slow tempo, constant tension, slight lean', amount: 3, reps: `12-15`, rest: 5},
-    {name: 'Triceps Pushdown', desc: 'Elbows tight to sides, full lockout', amount: 3, reps: `10-12`, rest: 5},
-    {name: 'Seated Dip Machine', desc: 'Slight forward lean, press through palms', amount: 3, reps: `12-15`, rest: 5}
+    {name: 'Bench Press', desc: 'Full range, pec focus, 1-2 RIR', amount: 3, reps: `6-10`, rest: 60},
+    {name: 'Shoulder Press', desc: 'Controlled, upright back, no bounce', amount: 3, reps: `8-12`, rest: 60},
+    {name: 'Chest Fly', desc: 'Hard stretch + strong squeeze, 0-1 RIR', amount: 3, reps: `12-15`, rest: 60},
+    {name: 'Lateral Raise', desc: 'Slow tempo, constant tension, slight lean', amount: 3, reps: `12-15`, rest: 45},
+    {name: 'Triceps Pushdown', desc: 'Elbows tight to sides, full lockout', amount: 3, reps: `10-12`, rest: 60},
+    {name: 'Seated Dip Machine', desc: 'Slight forward lean, press through palms', amount: 3, reps: `12-15`, rest: 60}
 ]
 
 const pullDay = [
-    {name: 'Pull-Ups', desc: 'Controlled descent, full ROM', amount: 3, reps: `As Many As Possible`, rest: 90},
-    {name: 'Lat Pulldown', desc: 'Pull to upper chest, strong lat contraction', amount: 3, reps: `8-12`, rest: 90},
+    {name: 'Pull-Ups', desc: 'Controlled descent, full ROM', amount: 3, reps: `As Many As Possible`, rest: 70},
+    {name: 'Lat Pulldown', desc: 'Pull to upper chest, strong lat contraction', amount: 3, reps: `8-12`, rest: 60},
     {name: 'Seated Cable Row', desc: 'Elbows tight, pull to waist', amount: 3, reps: `10`, rest: 60},
     {name: 'Cross-Body Lat Pull Around', desc: 'Slight rotation, low elbow path', amount: 3, reps: `12 Each Side`, rest: 45},
     {name: 'Rear Delt Fly', desc: 'Squeeze peak, slow return', amount: 3, reps: `15-20`, rest: 60},
@@ -72,7 +72,7 @@ const pullDay = [
 ]
 
 const legsDay = [
-    {name: 'Leg Press', desc: 'Push through heels, full ROM', amount: 3, reps: `8-12`, rest: 90},
+    {name: 'Leg Press', desc: 'Push through heels, full ROM', amount: 3, reps: `8-12`, rest: 60},
     {name: 'Leg Curl', desc: 'Stretch fully, pause at squeeze', amount: 3, reps: `12-15`, rest: 60},
     {name: 'Leg Extension', desc: 'No lockout, control every inch', amount: 3, reps: `12`, rest: 60},
     {name: 'Calf Press', desc: 'Max squeeze at top, deep stretch', amount: 3, reps: `15-20`, rest: 45},
@@ -425,7 +425,10 @@ resetButton.addEventListener("click", () => {
 });
 
 // END OF RESET FUNCTIONALITY
-
+function addCounter() {
+    counter++;
+    earlierCounter++;
+}
 
 function skipWOfunc() {
     const selectedKey = curWorkoutDay.value;
@@ -445,9 +448,11 @@ function skipWOfunc() {
     currentState = STATES.IDLE; 
     workoutInProgress = false;
     updateButtonText();
-
-    counter++;
-    earlierCounter++;
+    if (curWorkout.textContent !== "Workout Complete.") {
+        addCounter();
+    } else {
+        checkButton.textContent = "Workout Done!";
+    }
 
     if (counter >= selectedDay[timesButtonClicked].amount) {
         timesButtonClicked++;
