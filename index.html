@@ -3,28 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>GymSync</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="content">
-        <h1>Tracker</h1>
+        <h1>GymSync</h1>
         <select id="workoutDay">
             <option value="0">Push</option>
             <option value="1">Pull</option>
             <option value="2">Legs</option>
             <option value="3">tester</option>
         </select>
-        <div class="workoutDiv">
-            <h2>Current Workout: </h2>
-            <h3 class="curWorkout"></h3>
-            <p class="curWorkoutDesc"></p>
-            <p class="curWorkoutReps"></p>
+        <div class="dashboard">
+            <button class="backWorkout">←</button>
+            <div class="workoutDiv">
+                <h2 class="workoutStatusTxt">Current Workout: </h2>
+                <h3 class="curWorkout"></h3>
+                <p class="curWorkoutDesc"></p>
+                <p class="curWorkoutReps"></p>
+            </div>
+            <button class="skipWorkout">→</button>
         </div>
-        <p>Rest Time Left :</p>
+        
+        <p class="workRestStatus"></p>
         <p class="restTime">0</p>
         <button class="cut">Start Workout</button>
-        <button class="reset">↺</button>
+        <button class="openConfirmReset">↺</button>
+        
+        <div class="confirmReset hidden">
+            <h1>Are You Sure You Want To Reset?</h1>
+            <div>
+                <button class="close-modal">Back</button>
+                <button class="reset">Yes</button>
+            </div>
+        </div>
+        <div class="overlay hidden"></div>
+
     </div>
 
     <script src="script.js"></script>
