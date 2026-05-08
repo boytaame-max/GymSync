@@ -1,180 +1,343 @@
-html {
-    height: 100%;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,800;0,900;1,400;1,800&family=Bebas+Neue&family=Roboto+Mono:wght@500;700&display=swap');
+
+:root {
+    --fit-green: #D4FF00;
+    --fit-green-40: #4a5900;
+    --black-88: #1E1E1E;
+    --black: #000000;
+    --white: #FFFFFF;
+    
+    --bg: var(--black);
+    --surface: var(--black-88);
+    --text: var(--white);
+    --accent: var(--fit-green);
 }
 
 * {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    background-image: linear-gradient(#00012e, #000000, #00012e);
-    background-repeat: no-repeat;
-    color: white;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
 }
 
-.content {
-    max-width: 1200px;
-    margin: auto;
-    text-align: center;
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 24px;
+    position: relative;
+    overflow-x: hidden;
 }
 
-.content > h1 {
-    font-family:fantasy;
-    letter-spacing: 5px;
-    font-weight: 500;
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
 }
 
-.content > p {
-    font-size: 28px;
+.logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 2px;
+    color: var(--text);
 }
 
-.curWorkoutDesc {
-    font-size: 17px;
-}
-
-.workoutDiv {
-    margin: auto;
-    max-width: fit-content;
-    padding: 35px;
-    border-radius: 2rem;
-    background-color: #000000a6;
-}
-
-.cut {
-    padding: 25px 25px;
-    border-radius: 12px;
-    border: none;
-    background-color: #a94beb;
-    color: white;
-    cursor: pointer;
-}
-
-.hide {
-    display: none;
-}
-
-.curWorkout {
-    font-style: italic;
-}
-
-#workoutDay {
-    border: none;
-    height: 40px;
-    width: 70px;
-    font-weight: bold;
-    margin-bottom: 35px;
-}
-
-.curWorkoutReps {
-    font-style: italic;
+.logo span {
+    color: var(--accent);
 }
 
 .openConfirmReset {
-    display: inline-block;
-    font-size: 35px;
-    position: fixed;
-    left: 0%;
-    bottom: 0%;
-    padding: 0.8rem 0.7em;
-    margin: 15px;
-    border-radius: 50%;
-    background-color: #a94beb;
-    color: white;
-    border: black solid 2px;
+    background: transparent;
+    border: none;
+    color: var(--text);
     cursor: pointer;
+    padding: 8px;
+    transition: color 0.2s;
 }
 
-.skipWorkout {
-    display: table-cell;
-    font-size: 32px;
-    padding: 0.4rem 0.7em 0.8rem;
-    margin: 15px;
-    background-color: #a94beb;
-    border-radius: 5%;
-    color: white;
-    border: black solid 2px;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    vertical-align: middle;
-    cursor: pointer;
+.openConfirmReset:hover {
+    color: var(--accent);
 }
 
-.backWorkout {
-    display: table-cell;
-    font-size: 32px;
-    padding: 0.4rem 0.7em 0.8rem;
-    margin: 15px;
-    background-color: #a94beb;
-    border-radius: 5%;
-    color: white;
-    border: black solid 2px;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    vertical-align: middle;
-    cursor: pointer;
+.controls {
+    margin-bottom: 24px;
 }
 
-.dashboard {
+.day-selector {
+    width: 100%;
+    appearance: none;
+    background-color: var(--surface);
+    color: var(--text);
+    border: 2px solid var(--surface);
+    padding: 16px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 12px;
+    outline: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23D4FF00' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    transition: border-color 0.3s;
+}
+
+.day-selector:focus {
+    border-color: var(--accent);
+}
+
+main {
+    flex: 1;
     display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
-
-
-.hidden {
-    display: none;
+.workout-card {
+    background-color: var(--surface);
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-left: 4px solid var(--accent);
 }
 
+.workout-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
+.icon-btn {
+    background: var(--bg);
+    border: none;
+    color: var(--accent);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
 
+.icon-btn:hover {
+    background: #2a2a2a;
+    transform: scale(1.05);
+}
 
+.icon-btn:active {
+    transform: scale(0.95);
+}
 
-/* MODAL WINDOW CONFIRM RESET */
+.workout-info-top {
+    text-align: center;
+    flex: 1;
+}
+
+.workoutStatusTxt {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.curWorkout {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.workout-details {
+    text-align: center;
+    background: var(--bg);
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.curWorkoutDesc {
+    font-size: 14px;
+    color: #AAA;
+    font-style: italic;
+    margin-bottom: 12px;
+}
+
+.rep-badge {
+    display: inline-block;
+    background-color: var(--accent);
+    color: var(--black);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.timer-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    min-height: 200px;
+}
+
+.timer-circle {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    border: 8px solid var(--surface);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    transition: border-color 0.3s ease;
+}
+
+.timer-circle.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 30px rgba(212, 255, 0, 0.2), inset 0 0 20px rgba(0,0,0,0.5);
+}
+
+.workRestStatus {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.restTime {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+}
+
+.action-section {
+    margin-top: auto;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: var(--accent);
+    color: var(--black);
+    box-shadow: 0 8px 0 #9dbd00;
+}
+
+.primary-btn:active {
+    transform: translateY(8px);
+    box-shadow: 0 0 0 #9dbd00;
+}
+
+.primary-btn.secondary-state {
+    background-color: var(--surface);
+    color: var(--text);
+    box-shadow: none;
+    border: 2px solid var(--accent);
+}
+
+.primary-btn.secondary-state:active {
+    transform: translateY(2px);
+}
+
+/* Modal */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+}
 
 .confirmReset {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 70%;
-
-    background-color: white;
-    color: black;
-    padding: 30px 0px;
-    border-radius: 20px;
-    box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
-    z-index: 10;
+    width: 90%;
+    max-width: 360px;
+    background-color: var(--surface);
+    color: var(--text);
+    padding: 32px;
+    border-radius: 24px;
+    z-index: 60;
+    text-align: center;
+    border: 2px solid var(--accent);
 }
 
-.confirmReset > h1 {
-    font-size: 22px;
+.confirmReset h2 {
+    font-size: 24px;
+    margin-bottom: 12px;
+    font-weight: 800;
 }
 
-.close-modal {
-    font-weight: bold;
-    background-color: red;
+.confirmReset p {
+    color: #AAA;
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 16px;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 16px;
+    border-radius: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
     border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    margin-right: 15px;
 }
 
-.reset {
-    font-weight: bold;
-    background-color: lime;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 5px;
+.btn-secondary {
+    background-color: var(--bg);
+    color: var(--text);
 }
 
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(3px);
-  z-index: 5;
+.btn-danger {
+    background-color: #ff3366;
+    color: white;
+}
+
+.hidden {
+    display: none !important;
 }

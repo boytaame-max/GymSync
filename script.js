@@ -115,8 +115,8 @@ curWorkout.textContent = selectedDay[timesButtonClicked].name + " 1";
 curWorkoutDesc.textContent = `"${selectedDay[timesButtonClicked].desc}"`;
 curWorkoutReps.textContent = `${selectedDay[timesButtonClicked].amount - earlierCounter} x ${selectedDay[timesButtonClicked].reps}`;
 
-TODO:
-FIXME:
+// TODO:
+// FIXME:
 curWorkoutDay.addEventListener("change", () => {
     timesButtonClicked = 0;
     counter = 0;
@@ -151,18 +151,18 @@ function updateButtonText() {
 
     switch (currentState) {
         case STATES.IDLE:
-            checkButton.textContent = "Start Workout";
-            checkButton.style.backgroundColor = "#a94beb"
+            checkButton.textContent = "START WORKOUT";
+            checkButton.classList.remove("secondary-state");
             break;
         case STATES.WORKOUT_PENDING:
-            checkButton.textContent = "Click Again To End Workout";
-            checkButton.style.backgroundColor = "#42124d";
+            checkButton.textContent = "END WORKOUT";
+            checkButton.classList.add("secondary-state");
             break;
         case STATES.WORKOUT:
-            checkButton.textContent = "Take Rest";
+            checkButton.textContent = "TAKE REST";
             break;
         case STATES.REST:
-            checkButton.textContent = "Rest Ongoing";
+            checkButton.textContent = "RESTING...";
             break;
     }
 }
@@ -190,8 +190,8 @@ function workoutT() {
             console.log(roundedTemp);
             restTime.textContent = roundedTemp;
             
-            TODO:
-            FIXME:
+            // TODO:
+            // FIXME:
             console.log(currentState);
     
             updateButtonText();
@@ -235,8 +235,8 @@ function restT_changer(restT) {
     
             updateButtonText();
 
-            TODO:
-            FIXME:
+            // TODO:
+            // FIXME:
             console.log(currentState);
     
             if (temp <= 0) {
@@ -245,10 +245,19 @@ function restT_changer(restT) {
                 interval = null;
                 restTime.textContent = 0;
                 isWorkoutSession = true;
+                
+                // Add pulse effect to timer circle when done
+                const timerCircle = document.querySelector('.timer-circle');
+                if(timerCircle) timerCircle.classList.remove('active');
+                
                 updateButtonText();
                 resolve();
             }
         }, 100)
+        
+        // Add active class to timer circle
+        const timerCircle = document.querySelector('.timer-circle');
+        if(timerCircle) timerCircle.classList.add('active');
     })
 }
 
@@ -275,10 +284,15 @@ async function handleWorkoutSesh() {
 
     switch (currentState) {
         case STATES.IDLE:
-            workoutStatusTxt.textContent = "Current Workout: ";
+            workoutStatusTxt.textContent = "CURRENT WORKOUT";
             workoutStatusTxt.style.fontStyle = 'normal';
             // checkButton.textContent = "Click Again To End Workout";
             currentState = STATES.WORKOUT_PENDING;
+            
+            // Activate timer visualization
+            const tc = document.querySelector('.timer-circle');
+            if(tc) tc.classList.add('active');
+            
             await workoutT();
             currentState = STATES.WORKOUT;
             break;
@@ -303,34 +317,39 @@ async function handleWorkoutSesh() {
                 curWorkoutDesc.textContent = `"${currentExercise.desc}"`;
                 curWorkoutReps.textContent = `${currentExercise.amount - counter} x ${currentExercise.reps}`;
             } else {
-                curWorkout.textContent = "Workout Complete."
-                curWorkoutDesc.textContent = "No Workout Active."
+                curWorkout.textContent = "WORKOUT COMPLETE"
+                curWorkoutDesc.textContent = "Great job! You've finished this session."
                 curWorkoutReps.style.display = 'none';
                 curWorkoutDay.disabled = false;
-                checkButton.textContent = "Workout Done!";
+                checkButton.textContent = "DONE";
+                checkButton.classList.remove("secondary-state");
+                
+                const timerCircle = document.querySelector('.timer-circle');
+                if(timerCircle) timerCircle.classList.remove('active');
+                
                 currentState = STATES.IDLE;
                 workoutInProgress = false;
                 return;
             }
 
-            checkButton.textContent = "Rest Ongoing";
-            checkButton.style.backgroundColor = "#751818ff";
+            checkButton.textContent = "RESTING";
+            checkButton.classList.add("secondary-state");
             currentState = STATES.REST;
 
         case STATES.REST: 
-            TODO:
-            FIXME:
-            workoutStatusTxt.textContent = "Upcoming Workout: ";
-            workoutStatusTxt.style.fontStyle = 'italic';
+            // TODO:
+            // FIXME:
+            workoutStatusTxt.textContent = "UPCOMING WORKOUT";
+            workoutStatusTxt.style.fontStyle = 'normal';
             await restT_changer(selectedDay[timesButtonClicked].rest);
-            checkButton.textContent = "Start Workout"
-            checkButton.style.backgroundColor = "#a94beb";
+            checkButton.textContent = "START WORKOUT";
+            checkButton.classList.remove("secondary-state");
             currentState = STATES.IDLE;
             break;
         
         case STATES.WORKOUT_PENDING:
-            checkButton.textContent = "Click To Rest";
-            checkButton.style.backgroundColor = "#12474dff";
+            checkButton.textContent = "REST";
+            checkButton.classList.add("secondary-state");
             break;
     }
 
@@ -409,11 +428,14 @@ resetButton.addEventListener("click", () => {
     curWorkout.textContent = currentExercise.name + " 1";
     curWorkoutDesc.textContent = `"${currentExercise.desc}"`;
     curWorkoutReps.textContent = `${currentExercise.amount} x ${currentExercise.reps}`;
-    curWorkoutReps.style.display = 'block';
-    checkButton.style.backgroundColor = "#a94beb";
+    curWorkoutReps.style.display = 'inline-block';
+    checkButton.classList.remove("secondary-state");
+    
+    const timerCircle = document.querySelector('.timer-circle');
+    if(timerCircle) timerCircle.classList.remove('active');
 
     // Reset button text
-    checkButton.textContent = "Start Workout";
+    checkButton.textContent = "START WORKOUT";
 
     // Remove any lingering button event listeners (safety)
     checkButton.replaceWith(checkButton.cloneNode(true));
@@ -448,10 +470,10 @@ function skipWOfunc() {
     currentState = STATES.IDLE; 
     workoutInProgress = false;
     updateButtonText();
-    if (curWorkout.textContent !== "Workout Complete.") {
+    if (curWorkout.textContent !== "WORKOUT COMPLETE") {
         addCounter();
     } else {
-        checkButton.textContent = "Workout Done!";
+        checkButton.textContent = "DONE";
     }
 
     if (counter >= selectedDay[timesButtonClicked].amount) {
@@ -464,15 +486,15 @@ function skipWOfunc() {
         curWorkout.textContent = currentExercise.name + " " + (counter + 1);
         curWorkoutDesc.textContent = `"${currentExercise.desc}"`;
         curWorkoutReps.textContent = `${currentExercise.amount - counter} x ${currentExercise.reps}`;
-        curWorkoutReps.style.display = 'block';
+        curWorkoutReps.style.display = 'inline-block';
         restTime.textContent = "0";
     } else {
-        curWorkout.textContent = "Workout Complete.";
-        curWorkoutDesc.textContent = "No Workout Active.";
+        curWorkout.textContent = "WORKOUT COMPLETE";
+        curWorkoutDesc.textContent = "Great job! You've finished this session.";
         curWorkoutReps.style.display = 'none';
         curWorkoutDay.disabled = false;
-        checkButton.textContent = "Workout Done!";
-        checkButton.style.backgroundColor = "#a94beb";
+        checkButton.textContent = "DONE";
+        checkButton.classList.remove("secondary-state");
         currentState = STATES.IDLE;
         return;
     }
@@ -523,15 +545,15 @@ function prevWOfunc() {
         curWorkout.textContent = currentExercise.name + " " + (counter + 1);
         curWorkoutDesc.textContent = `"${currentExercise.desc}"`;
         curWorkoutReps.textContent = `${currentExercise.amount - counter} x ${currentExercise.reps}`;
-        curWorkoutReps.style.display = 'block';
+        curWorkoutReps.style.display = 'inline-block';
         restTime.textContent = "0";
     } else {
-        curWorkout.textContent = "Workout Complete.";
-        curWorkoutDesc.textContent = "No Workout Active.";
+        curWorkout.textContent = "WORKOUT COMPLETE";
+        curWorkoutDesc.textContent = "Great job! You've finished this session.";
         curWorkoutReps.style.display = 'none';
         curWorkoutDay.disabled = false;
-        checkButton.textContent = "Workout Done!";
-        checkButton.style.backgroundColor = "#a94beb";
+        checkButton.textContent = "DONE";
+        checkButton.classList.remove("secondary-state");
         currentState = STATES.IDLE;
         return;
     }
